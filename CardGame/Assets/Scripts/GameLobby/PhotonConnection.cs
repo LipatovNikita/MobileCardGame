@@ -32,24 +32,8 @@ public class PhotonConnection : Photon.MonoBehaviour
 
 	void OnJoinedLobby() 
 	{ 
-		PhotonNetwork.JoinOrCreateRoom("testRoom", new RoomOptions(), TypedLobby.Default);
+		PhotonNetwork.JoinOrCreateRoom("room", new RoomOptions(), TypedLobby.Default);
 		PhotonNetwork.playerName = PlayerPrefs.GetString("LoginUser", "Unknown");
-
-
-		/*var connectedRoom = PhotonNetwork.GetRoomList().ToList().FindAll(f => f.MaxPlayers > f.PlayerCount).FirstOrDefault();
-		RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 2 };
-		if (connectedRoom != null)
-		{
-			PhotonNetwork.JoinOrCreateRoom(connectedRoom.Name, roomOptions, TypedLobby.Default);
-			/*PhotonNetwork.CreateRoom("GameRoom", roomOptions, TypedLobby.Default);#1#
-			GameObject.Find("Debug").GetComponent<Text>().text = "Подключение к комнате" + connectedRoom.Name;
-		}
-		else
-		{
-			PhotonNetwork.JoinOrCreateRoom("CardGame" + Guid.NewGuid().ToString("N"), roomOptions, TypedLobby.Default);
-			/*PhotonNetwork.JoinRoom(connectedRoom.Name);#1#
-			GameObject.Find("Debug").GetComponent<Text>().text = "Комната создана";
-		}*/
 	} 
  
 	public void OnJoinedRoom() 
@@ -92,7 +76,7 @@ public class PhotonConnection : Photon.MonoBehaviour
 		request.downloadHandler = new DownloadHandlerBuffer();
 		request.SetRequestHeader("Content-Type", "application/json");
 		yield return request.Send();
-		if (!request.isNetworkError)
+		if (!request.isError)
 		{            
 			DeckBean deck = JsonUtility.FromJson<DeckBean>(request.downloadHandler.text);
 			Vector3 pos = transform.position;

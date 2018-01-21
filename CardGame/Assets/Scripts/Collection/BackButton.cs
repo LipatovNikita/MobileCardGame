@@ -25,7 +25,7 @@ public class BackButton : MonoBehaviour {
         string currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "GameLobby")
         {
-            PhotonNetwork.CloseConnection(PhotonNetwork.player);  
+            PhotonNetwork.Disconnect();
             SceneManager.LoadScene("MainMenu");
         }
         else
